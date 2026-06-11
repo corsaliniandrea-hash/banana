@@ -29,27 +29,18 @@
         max-height: 100vh;
         display: block;
       }
-      @keyframes slideRevealLine {
+      @keyframes slideAcrossLine {
         0% {
-          transform: translateX(-100%);
-          opacity: 0;
+          transform: translateX(1150px);
         }
         100% {
-          transform: translateX(0);
-          opacity: 1;
+          transform: translateX(var(--train-exit, -4200px));
         }
       }
+      /* The three words move together as one train; x offsets are set by the
+         script below so each word overlaps the previous one by 200px */
       .poster-text-line {
-        animation: slideRevealLine 0.6s ease-out both;
-      }
-      .poster-text-line:nth-of-type(1) {
-        animation-delay: 0s;
-      }
-      .poster-text-line:nth-of-type(2) {
-        animation-delay: 0.15s;
-      }
-      .poster-text-line:nth-of-type(3) {
-        animation-delay: 0.3s;
+        animation: slideAcrossLine var(--train-duration, 10s) linear infinite;
       }
       @keyframes bananaBalance {
         0% {
@@ -189,12 +180,12 @@
           #titolo {
             fill: none;
             font-family: ChiquitaNormal, Chiquita;
-            font-size: 379.9px;
+            /* Cap height ~0.72em: 890px gives letters ~640px tall = 1/3 of the 1920px poster */
+            font-size: 890px;
             mix-blend-mode: multiply;
             stroke: red;
             stroke-miterlimit: 10;
             stroke-width: 10px;
-            transform: translateY(300px);
           }
         </style>
       </defs>
@@ -566,17 +557,35 @@
 
       <g id="titolo">
         <g class="poster-text-line">
-          <text class="cls-1" transform="translate(44.81 839.94)">SIAMO</text>
+          <text class="cls-1" transform="translate(0 580)">SIAMO</text>
         </g>
         <g class="poster-text-line">
-          <text class="cls-1" transform="translate(44.81 1120.94)">ALLA</text>
+          <text class="cls-1" transform="translate(0 1220)">ALLA</text>
         </g>
         <g class="poster-text-line">
-          <text class="cls-1" transform="translate(44.81 1401.94)">
-            FRUTTA
-          </text>
+          <text class="cls-1" transform="translate(0 1860)">FRUTTA</text>
         </g>
       </g>
     </svg>
+    <script>
+      document.fonts.ready.then(() => {
+        const overlap = 1200;
+        const texts = document.querySelectorAll("#titolo text");
+        let x = 0;
+        let rightEdge = 0;
+        texts.forEach((t) => {
+          const y = t.transform.baseVal.getItem(0).matrix.f;
+          t.setAttribute("transform", `translate(${x} ${y})`);
+          const w = t.getBBox().width;
+          rightEdge = x + w;
+          x += w - overlap;
+        });
+        const exit = -(rightEdge + 60);
+        const root = document.documentElement;
+        root.style.setProperty("--train-exit", `${exit}px`);
+        // Keep speed constant (~535px/s) regardless of train length
+        root.style.setProperty("--train-duration", `${(1150 - exit) / 535}s`);
+      });
+    </script>
   </body>
 </html>
