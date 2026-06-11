@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        font-family: ChiquitaNormal, Chiquita;
+        font-size: 379.9px;
+        mix-blend-mode: multiply;
+        stroke: red;
+        stroke-miterlimit: 10;
+        stroke-width: 10px;
+      }
+
+      .cls-2 {
+        isolation: isolate;
+      }
+    </style>
+  </defs>
+  <g class="cls-2">
+    <g id="Livello_10" data-name="Livello 10">
+      <text class="cls-1 poster-text-line" transform="translate(44.81 839.94)">SIAMO</text>
+      <text class="cls-1 poster-text-line" transform="translate(44.81 1120.94)">ALLA</text>
+      <text class="cls-1 poster-text-line" transform="translate(44.81 1401.94)">FRUTTA</text>
+    </g>
+  </g>
+</svg>
